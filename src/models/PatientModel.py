@@ -2,6 +2,7 @@ from marshmallow import fields, Schema
 import datetime
 from . import db
 from marshmallow.validate import Length, Regexp
+from sqlalchemy import or_
 
 class PatientModel(db.Model):
     
@@ -47,13 +48,27 @@ class PatientModel(db.Model):
     def get_all_patients():
         return PatientModel.query.all()
 
+    @staticmethod
+    def search(param):
+        search = "%{}%".format(param)
+        return PatientModel.query.filter(
+            or_(
+            PatientModel.name.like(search),
+            PatientModel.ssn.like(search),
+            PatientModel.id.like(search))).all()
+    
+    @staticmethod
+    def get_patient_by_ssn(value):
+        return PatientModel.query.filter_by(ssn=value).first()
+
+
 
 class PatientSchema(Schema):
     id = fields.Integer(dump_only=True)
-    ssn = fields.Integer(required=True, validate=Length(equal=9))
-    name = fields.String(required=True, validate=Regexp(regex="^[a-zA-Z ]*$"))
-    age = fields.Integer(required=True, validate=Length(min=1, max=3))
-    admited_on = fields.DateTime(required=True)
+    ssn = fields.Integer(required=True)
+    name = fields.String(required=True)
+    age = fields.Integer(required=True)
+    admited_on = fields.DateTime()
     type_of_bed = fields.String(required=True)
     address = fields.String(required=True)
     state = fields.String(required=True)

@@ -15,6 +15,11 @@ def create():
         data = patient_schema.load(req_data, partial=True)
     except ValidationError as err:
         return custom_response({'error': err.messages}, 400)
+
+    patient_in_db = PatientModel.get_patient_by_ssn(data.get('ssn'))
+    if patient_in_db:
+        message = {'error': 'Patient already exist, please supply another ssn'}
+        return custom_response(message, 400)
     
     patient = PatientModel(data)
     patient.save()
@@ -47,6 +52,14 @@ def get_one(patient_id):
     if not patient:
         return custom_response({'error': 'Patient not found'}, 404)
     data = patient_schema.dump(patient)
+    return custom_response(data, 200)
+
+
+@patient_api.route('search/<string:search>', methods=['GET'])
+@Auth.auth_required
+def search(search):
+    patients = PatientModel.search(search)
+    data = patient_schema.dump(patients, many=True)
     return custom_response(data, 200)
 
 
