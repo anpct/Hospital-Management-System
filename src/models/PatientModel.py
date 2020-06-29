@@ -1,8 +1,11 @@
-from marshmallow import fields, Schema
+from marshmallow import fields, Schema, validates, ValidationError
 import datetime
 from . import db
 from marshmallow.validate import Length, Regexp
 from sqlalchemy import or_
+from .MedicineModel import MedicineSchema
+from .DiagnosticsModel import DiagnosticsSchema
+
 
 class PatientModel(db.Model):
     
@@ -16,6 +19,9 @@ class PatientModel(db.Model):
     address = db.Column(db.String(1000), nullable=False)
     state = db.Column(db.String(255), nullable=False)
     city = db.Column(db.String(255), nullable=False)
+    medicines = db.relationship('MedicineModel', backref='patients', lazy=True)
+    diagnostics = db.relationship('DiagnosticsModel', backref='patients', lazy=True)
+
 
     def __init__(self, data):
         self.ssn = data.get('ssn')
@@ -62,16 +68,25 @@ class PatientModel(db.Model):
         return PatientModel.query.filter_by(ssn=value).first()
 
 
+def age(age):
+    if (age < 1 or age > 999):
+        raise ValidationError('Please enter a valid age')
+
+def ssn(ssn):
+    if(len(str(ssn)) != 9):
+        raise ValidationError('Enter a valid ssn')
 
 class PatientSchema(Schema):
     id = fields.Integer(dump_only=True)
-    ssn = fields.Integer(required=True)
-    name = fields.String(required=True)
-    age = fields.Integer(required=True)
+    ssn = fields.Integer(required=True, validate=ssn)
+    name = fields.String(required=True, validate=Regexp(regex=r'^[a-zA-Z ]+$', error="Name must conatin only alphabets"))
+    age = fields.Integer(required=True, validate=age)
     admited_on = fields.DateTime()
     type_of_bed = fields.String(required=True)
     address = fields.String(required=True)
-    state = fields.String(required=True)
-    city = fields.String(required=True)
+    state = fields.String(required=True, validate=Regexp(regex=r'^[a-zA-Z ]+$', error="State must conatin only alphabets"))
+    city = fields.String(required=True, validate=Regexp(regex=r'^[a-zA-Z ]+$', error="City must conatin only alphabets"))
+    medicines = fields.Nested(MedicineSchema, many=True)
+    diagnostics = fields.Nested(DiagnosticsSchema, many=True)
 
-
+    
