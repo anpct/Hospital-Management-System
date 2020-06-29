@@ -7,6 +7,7 @@ class Development(object):
     TESTING = False
     JWT_SECRET_KEY = 'uhfiush889nkjk)(&)*(&$UHJKKFJ'
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'tcs.db')
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
 class Production(object):

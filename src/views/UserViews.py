@@ -1,4 +1,4 @@
-from flask import request, json, Response, Blueprint, g
+from flask import request, json, Response, Blueprint
 from ..models.UserModel import UserModel, UserSchema
 from ..shared.auth import Auth
 from marshmallow import ValidationError
@@ -7,7 +7,7 @@ user_api = Blueprint('user_api', __name__)
 user_schema = UserSchema()
 
 
-@user_api.route('/', methods=['POST'])
+@user_api.route('/register', methods=['POST'])
 def create():
     """
     Create User Function

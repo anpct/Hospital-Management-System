@@ -4,3 +4,4 @@ from flask_bcrypt import Bcrypt
 db = SQLAlchemy()
 bcrypt = Bcrypt()
 from .UserModel import UserModel, UserSchema
+from .PatientModel import PatientModel, PatientSchema
