@@ -1,10 +1,13 @@
+# Imports
 from . import db
 from marshmallow import fields, Schema, validates, ValidationError
 from marshmallow.validate import Length, Regexp
 from .MasterDiagnosticsModel import MasterDiagnosticsSchema
 
 class DiagnosticsModel(db.Model):
-
+    '''
+    ORM to manage Diagnostics
+    '''
     __tablename__ = "diagnostics"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -30,6 +33,7 @@ class DiagnosticsModel(db.Model):
         db.session.commit()
 
 
+# Schema for serilazitation and validation
 class DiagnosticsSchema(Schema):
     diagnostic = fields.Integer(required=True)
     id = fields.Integer(dump_only=True)

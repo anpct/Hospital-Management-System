@@ -1,3 +1,4 @@
+# Imports
 from marshmallow import fields, Schema, validates, ValidationError
 import datetime
 from . import db
@@ -8,6 +9,9 @@ from .DiagnosticsModel import DiagnosticsSchema
 
 
 class PatientModel(db.Model):
+    '''
+    ORM to manage Patients
+    '''
     
     __tablename__ = 'patients'
     id = db.Column(db.Integer, primary_key=True)
@@ -76,6 +80,7 @@ def ssn(ssn):
     if(len(str(ssn)) != 9):
         raise ValidationError('Enter a valid ssn')
 
+# Schema for serilazitation and validation
 class PatientSchema(Schema):
     id = fields.Integer(dump_only=True)
     ssn = fields.Integer(required=True, validate=ssn, load_only=True)

@@ -1,3 +1,4 @@
+# Imports
 from flask import request, json, Response, Blueprint, g
 from ..models.UserModel import UserModel, UserSchema
 from ..shared.auth import Auth
@@ -6,7 +7,7 @@ from marshmallow import ValidationError
 user_api = Blueprint('user_api', __name__)
 user_schema = UserSchema()
 
-
+# Endpoint for registration
 @user_api.route('/register', methods=['POST'])
 def create():
     """
@@ -28,7 +29,7 @@ def create():
     token = Auth.generate_token(ser_data.get('id'))
     return custom_response({'jwt_token': token, 'user': ser_data}, 201)
 
-
+# Endpoint for retrival
 @user_api.route('/me', methods=['GET'])
 @Auth.auth_required
 def get_me():
@@ -39,7 +40,7 @@ def get_me():
     ser_user = user_schema.dump(user)
     return custom_response(ser_user, 200)
 
-
+# Endpoint for login
 @user_api.route('/login', methods=['POST'])
 def login():
     """
@@ -62,6 +63,7 @@ def login():
     return custom_response({'jwt_token': token, 'user': ser_data}, 200)
 
 
+# Custom response
 def custom_response(res, status_code):
     """
     Custom Response Function

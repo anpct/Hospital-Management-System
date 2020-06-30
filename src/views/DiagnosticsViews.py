@@ -1,3 +1,4 @@
+# Imports
 from flask import json, Response, Blueprint, request
 from ..models.DiagnosticsModel import DiagnosticsModel, DiagnosticsSchema
 from ..shared.auth import Auth
@@ -7,7 +8,7 @@ from marshmallow import ValidationError
 diagnostics_api = Blueprint('diagnostics_api', __name__)
 diagnostics_schema = DiagnosticsSchema()
 
-
+# Endpoint for creation
 @diagnostics_api.route('/', methods=['POST'])
 @Auth.auth_required
 def create():
@@ -21,7 +22,7 @@ def create():
     ser_data = diagnostics_schema.dump(diagnostics)
     return custom_response(ser_data, 200)
 
-
+# Custom response
 def custom_response(res, status_code):
     """
     Custom Response Function

@@ -1,9 +1,12 @@
+# Imports
 from . import db
 from marshmallow import fields, Schema, validates, ValidationError
 from marshmallow.validate import Length, Regexp
 
 class MasterDiagnosticsModel(db.Model):
-
+    '''
+    ORM to manage Master Diagnostics
+    '''
     __tablename__="master_diagnostics"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -37,6 +40,7 @@ class MasterDiagnosticsModel(db.Model):
         return MasterDiagnosticsModel.query.get(id)
 
 
+# Schema for serilazitation and validation
 class MasterDiagnosticsSchema(Schema):
     id = fields.Integer(dump_only=True)
     name = fields.String(required=True, validate=Regexp(regex=r'^[a-zA-Z ]+$', error='Please enter a valid name'))

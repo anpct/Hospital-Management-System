@@ -1,3 +1,4 @@
+# Imports
 from ..models.MasterMedicineModel import MasterMedicineModel, MasterMedicineSchema
 from  flask import Response, json, Blueprint, request
 from marshmallow import ValidationError
@@ -6,7 +7,7 @@ from ..shared.auth import Auth
 master_medicine_api = Blueprint('master_medicine_api', __name__)
 master_medicine_schema = MasterMedicineSchema()
 
-
+# Endpoint for creation
 @master_medicine_api.route('/', methods=['POST'])
 @Auth.auth_required
 def create():
@@ -20,7 +21,7 @@ def create():
     res_data = master_medicine_schema.dump(master_medicine)
     return custom_response(res_data, 200)
 
-
+# Endpoint for retrival
 @master_medicine_api.route('/', methods=['GET'])
 @Auth.auth_required
 def get_medicine():
@@ -28,7 +29,7 @@ def get_medicine():
     res_data = master_medicine_schema.dump(data, many=True)
     return custom_response(res_data, 200)
 
-
+# Endpoint for deletion 
 @master_medicine_api.route('/<int:id>', methods=['DELETE'])
 @Auth.auth_required
 def delete(id):
@@ -41,6 +42,7 @@ def delete(id):
     return custom_response({'message': 'Deletion sucessfull'}, 200)
 
 
+# Custom response
 def custom_response(res, status_code):
     """
     Custom Response Function

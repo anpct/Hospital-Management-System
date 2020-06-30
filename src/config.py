@@ -1,6 +1,7 @@
+# Imports
 import os
 
-
+# Settings for development environment
 class Development(object):
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     DEBUG = True
@@ -10,6 +11,7 @@ class Development(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
+# Settings for production environment
 class Production(object):
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     DEBUG = False

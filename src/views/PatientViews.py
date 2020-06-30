@@ -1,3 +1,4 @@
+# Imports
 from flask import request, json, Response, Blueprint, g
 from ..models.PatientModel import PatientModel, PatientSchema
 from ..shared.auth import Auth
@@ -6,7 +7,7 @@ from marshmallow import ValidationError
 patient_api = Blueprint('patient_api', __name__)
 patient_schema = PatientSchema()
 
-
+# Endpoint for creation
 @patient_api.route('/', methods=['POST'])
 @Auth.auth_required
 def create():
@@ -27,6 +28,7 @@ def create():
     return custom_response(ser_data, 200)
 
 
+# Endpoint for deletion
 @patient_api.route('/<int:patient_id>', methods=['DELETE'])
 @Auth.auth_required
 def delete(patient_id):
@@ -36,7 +38,7 @@ def delete(patient_id):
     patient.delete()
     return custom_response({'message': 'Patient deleted'}, 200)
 
-
+# Endpoint for retrival
 @patient_api.route('/', methods=['GET'])
 @Auth.auth_required
 def get_all():
@@ -44,7 +46,7 @@ def get_all():
     data = patient_schema.dump(patients, many=True)
     return custom_response(data, 200)
 
-
+# Endpoint for individual retrival
 @patient_api.route('/<int:patient_id>', methods=['GET'])
 @Auth.auth_required
 def get_one(patient_id):
@@ -54,7 +56,7 @@ def get_one(patient_id):
     data = patient_schema.dump(patient)
     return custom_response(data, 200)
 
-
+# Endpoint for search
 @patient_api.route('search/<string:search>', methods=['GET'])
 @Auth.auth_required
 def search(search):
@@ -62,7 +64,7 @@ def search(search):
     data = patient_schema.dump(patients, many=True)
     return custom_response(data, 200)
 
-
+# Endpoint for updating
 @patient_api.route('/<int:patient_id>', methods=['PUT'])
 @Auth.auth_required
 def update(patient_id):
@@ -79,6 +81,7 @@ def update(patient_id):
     return custom_response(data, 200)    
 
 
+# Custom response
 def custom_response(res, status_code):
     """
     Custom Response Function

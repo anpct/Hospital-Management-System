@@ -1,3 +1,4 @@
+# Imports
 from flask import request, json, Response, Blueprint
 from ..models.MedicineModel import MedicineModel, MedicineSchema
 from ..models.MasterMedicineModel import MasterMedicineModel
@@ -8,6 +9,7 @@ medicine_api = Blueprint("medicine_api", __name__)
 medicine_schema = MedicineSchema()
 
 
+# Endpoint for creation
 @medicine_api.route('/', methods=['POST'])
 @Auth.auth_required
 def create():
@@ -28,6 +30,7 @@ def create():
     return custom_response(ser_data, 200)
 
 
+# Custom response
 def custom_response(res, status_code):
     """
     Custom Response Function

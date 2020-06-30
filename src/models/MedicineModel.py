@@ -1,10 +1,13 @@
+# Imports
 from . import db
 from marshmallow import fields, Schema, validates, ValidationError
 from marshmallow.validate import Length, Regexp
 from .MasterMedicineModel import MasterMedicineSchema
 
 class MedicineModel(db.Model):
-
+    '''
+    ORM to manage Medicines
+    '''
     __tablename__ = "medicines"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -31,6 +34,7 @@ class MedicineModel(db.Model):
         db.session.commit()
 
 
+# Schema for serilazitation and validation
 class MedicineSchema(Schema):
     medicine = fields.Integer(required=True)
     id = fields.Integer(dump_only=True)

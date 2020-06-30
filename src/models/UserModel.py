@@ -1,9 +1,13 @@
+# Imports
 from . import db, bcrypt
 from marshmallow import fields, Schema, validate
 import datetime
 
 
 class UserModel(db.Model):
+    '''
+    ORM to manage Users
+    '''
 
     __tablename__ = 'users'
 
@@ -50,6 +54,7 @@ class UserModel(db.Model):
         return '<id {}>'.format(self.id)
 
 
+# Schema for serilazitation and validation
 class UserSchema(Schema):
     id = fields.Int(dump_only=True)
     name = fields.Str(required=True)
