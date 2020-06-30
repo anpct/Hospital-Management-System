@@ -15,7 +15,7 @@ def create():
     try:
         data = master_medicine_schema.load(req_data)
     except ValidationError as err:
-        return custom_response(err.messages, 200)
+        return custom_response(err.messages, 400)
     master_medicine = MasterMedicineModel(data)
     master_medicine.save()
     res_data = master_medicine_schema.dump(master_medicine)
@@ -36,10 +36,10 @@ def delete(id):
     data = MasterMedicineModel.get_one_medicine(id)
     
     if not data:
-        return custom_response({'error': 'No such medicine'}, 400)
+        return custom_response({'error': 'No such medicine'}, 404)
     
     data.delete()
-    return custom_response({'message': 'Deletion sucessfull'}, 200)
+    return custom_response({'message': 'Deletion sucessfull'}, 204)
 
 
 # Custom response

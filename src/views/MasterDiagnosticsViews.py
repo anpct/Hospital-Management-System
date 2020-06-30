@@ -15,11 +15,11 @@ def create():
     try:
         data = master_diagnostics_schema.load(req_data)
     except ValidationError as err:
-        return custom_response(err.messages, 200)
+        return custom_response(err.messages, 400)
     master_diagnostics = MasterDiagnosticsModel(data)
     master_diagnostics.save()
     res_data = master_diagnostics_schema.dump(master_diagnostics)
-    return custom_response(res_data, 200)
+    return custom_response(res_data, 201)
 
 # Endpoint for retrival 
 @master_diagnostics_api.route('/', methods=['GET'])
@@ -36,10 +36,10 @@ def delete(id):
     data = MasterDiagnosticsModel.get_one_diagnostics(id)
     
     if not data:
-        return custom_response({'error': 'No such diagnostics'}, 400)
+        return custom_response({'error': 'No such diagnostics'}, 404)
     
     data.delete()
-    return custom_response({'message': 'Deletion sucessfull'}, 200)
+    return custom_response({'message': 'Deletion sucessfull'}, 204)
 
 
 # Custom response

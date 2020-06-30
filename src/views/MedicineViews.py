@@ -22,12 +22,24 @@ def create():
 
     valid = MasterMedicineModel.check_validity_and_update(data)
     if not valid:
-        return custom_response({'error': 'Please enter a valid quantity'}, 404)
+        return custom_response({'error': 'Please enter a valid quantity'}, 400)
 
     medicine = MedicineModel(data)
     medicine.save()
     ser_data = medicine_schema.dump(medicine)
-    return custom_response(ser_data, 200)
+    return custom_response(ser_data, 201)
+
+# Endpoint for deletion 
+@master_medicine_api.route('/<int:id>', methods=['DELETE'])
+@Auth.auth_required
+def delete(id):
+    data = MedicineModel.get_one_medicine(id)
+    
+    if not data:
+        return custom_response({'error': 'No such medicine'}, 404)
+    
+    data.delete()
+    return custom_response({'message': 'Deletion sucessfull'}, 204)
 
 
 # Custom response

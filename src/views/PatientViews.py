@@ -25,7 +25,7 @@ def create():
     patient = PatientModel(data)
     patient.save()
     ser_data = patient_schema.dump(patient)
-    return custom_response(ser_data, 200)
+    return custom_response(ser_data, 201)
 
 
 # Endpoint for deletion
@@ -36,7 +36,7 @@ def delete(patient_id):
     if not patient:
         return custom_response({'error': 'Patient not found'}, 404)
     patient.delete()
-    return custom_response({'message': 'Patient deleted'}, 200)
+    return custom_response({'message': 'Patient deleted'}, 204)
 
 # Endpoint for retrival
 @patient_api.route('/', methods=['GET'])

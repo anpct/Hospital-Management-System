@@ -31,6 +31,10 @@ class DiagnosticsModel(db.Model):
     def delete(self):
         db.session.delete(self) 
         db.session.commit()
+    
+    @staticmethod
+    def get_one_diagnostic(id):
+        return DiagnosticsModel.query.get(id)
 
 
 # Schema for serilazitation and validation

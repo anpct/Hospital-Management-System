@@ -16,11 +16,25 @@ def create():
     try:
         data = diagnostics_schema.load(req_data)
     except ValidationError as err:
-        return custom_response(err.messages, 404)
+        return custom_response(err.messages, 400)
     diagnostics = DiagnosticsModel(data)
     diagnostics.save()
     ser_data = diagnostics_schema.dump(diagnostics)
-    return custom_response(ser_data, 200)
+    return custom_response(ser_data, 201)
+
+
+# Endpoint for deletion
+@master_diagnostics_api.route('/<int:id>', methods=['DELETE'])
+@Auth.auth_required
+def delete(id):
+    data = DiagnosticsModel.get_one_diagnostic(id)
+    
+    if not data:
+        return custom_response({'error': 'No such diagnostics'}, 404)
+    
+    data.delete()
+    return custom_response({'message': 'Deletion sucessfull'}, 204)
+
 
 # Custom response
 def custom_response(res, status_code):

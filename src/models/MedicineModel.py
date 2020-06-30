@@ -32,6 +32,10 @@ class MedicineModel(db.Model):
     def delete(self):
         db.session.delete(self)
         db.session.commit()
+    
+    @staticmethod
+    def get_one_medicine(id):
+        return MedicineModel.query.get(id)
 
 
 # Schema for serilazitation and validation
