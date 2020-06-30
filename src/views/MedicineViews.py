@@ -1,5 +1,6 @@
 from flask import request, json, Response, Blueprint
 from ..models.MedicineModel import MedicineModel, MedicineSchema
+from ..models.MasterMedicineModel import MasterMedicineModel
 from ..shared.auth import Auth
 from marshmallow import ValidationError
 
@@ -16,6 +17,10 @@ def create():
         data = medicine_schema.load(req_data)
     except ValidationError as err:
         return custom_response(err.messages, 400)
+
+    valid = MasterMedicineModel.check_validity(data)
+    if not valid:
+        return custom_response({'error': 'Please enter a valid quantity'}, 404)
 
     medicine = MedicineModel(data)
     medicine.save()

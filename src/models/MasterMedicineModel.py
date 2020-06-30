@@ -33,7 +33,16 @@ class MasterMedicineModel(db.Model):
     @staticmethod
     def get_all_medicines_available():
         return MasterMedicineModel.query.all()
-
+    
+    @staticmethod
+    def check_validity(data):
+        medicine_id = data.get('medicine_id')
+        quantity = data.get('quantity')
+        q = MasterMedicineModel.query.get(medicine_id)
+        quantity_available = q.quantity
+        if(quantity<=quantity_available):
+            return True
+        return False
 
 
 class MasterMedicineSchema(Schema):

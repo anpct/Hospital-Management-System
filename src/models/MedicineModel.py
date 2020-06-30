@@ -8,6 +8,7 @@ class MedicineModel(db.Model):
     __tablename__ = "medicines"
 
     id = db.Column(db.Integer, primary_key=True)
+    medicine_id = db.Column(db.Integer, db.ForeignKey('master_medicine.id'), nullable=False)
     name = db.Column(db.String(128), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     patient = db.Column(db.Integer, db.ForeignKey('patients.id'), nullable=False)

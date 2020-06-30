@@ -15,8 +15,10 @@ def create_app(env_name):
     app.register_blueprint(user_blueprint, url_prefix='/api/users')
     app.register_blueprint(patient_blueprint, url_prefix='/api/patients')
     app.register_blueprint(medicine_blueprint, url_prefix='/api/medicine')
-    app.register_blueprint(diagnostics_blueprint, url_prefix='/api/diagnostics')
-    app.register_blueprint(master_medicine_blueprint, url_prefix='/api/master-medicine')
+    app.register_blueprint(diagnostics_blueprint,
+                           url_prefix='/api/diagnostics')
+    app.register_blueprint(master_medicine_blueprint,
+                           url_prefix='/api/master-medicine')
 
     @app.route('/', methods=['GET'])
     def index():
