@@ -15,8 +15,8 @@ def create():
     try:
         data = medicine_schema.load(req_data)
     except ValidationError as err:
-        return custom_response({'error': err.messages}, 400)
-    
+        return custom_response(err.messages, 400)
+
     medicine = MedicineModel(data)
     medicine.save()
     ser_data = medicine_schema.dump(medicine)

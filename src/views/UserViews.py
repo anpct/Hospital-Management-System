@@ -16,7 +16,7 @@ def create():
     try:
         data = user_schema.load(req_data, partial=True)
     except ValidationError as err:
-        return custom_response({'error': err.messages}, 400)
+        return custom_response(err.messages, 400)
     # check if user already exist in the db
     user_in_db = UserModel.get_user_by_email(data.get('email'))
     if user_in_db:
@@ -50,7 +50,7 @@ def login():
     try:
         data = user_schema.load(req_data, partial=True)
     except ValidationError as err:
-        return custom_response({'error': err.messages}, 400)
+        return custom_response(err.messages, 400)
     if not data.get('email') or not data.get('password'):
         return custom_response({'error': 'you need email and password to sign in'}, 400)
     user = UserModel.get_user_by_email(data.get('email'))

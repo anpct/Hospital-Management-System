@@ -15,7 +15,7 @@ def create():
     try:
         data = diagnostics_schema.load(req_data)
     except ValidationError as err:
-        return custom_response({'errpr': err.messages}, 404)
+        return custom_response(err.messages, 404)
     diagnostics = DiagnosticsModel(data)
     diagnostics.save()
     ser_data = diagnostics_schema.dump(diagnostics)

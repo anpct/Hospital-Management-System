@@ -14,7 +14,7 @@ def create():
     try:
         data = patient_schema.load(req_data, partial=True)
     except ValidationError as err:
-        return custom_response({'error': err.messages}, 400)
+        return custom_response(err.messages, 400)
 
     patient_in_db = PatientModel.get_patient_by_ssn(data.get('ssn'))
     if patient_in_db:
@@ -73,7 +73,7 @@ def update(patient_id):
     try:
         data = user_schema.load(req_data, partial=True)
     except ValidationError as err:
-        return custom_response({'error': err.messages}, 400)
+        return custom_response(err.messages, 400)
     patient.update(data)
     data = patient_schema.dump(patient)
     return custom_response(data, 200)    
