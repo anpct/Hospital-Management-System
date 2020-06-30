@@ -8,3 +8,4 @@ from .PatientModel import PatientModel, PatientSchema
 from .MedicineModel import MedicineSchema, MedicineModel
 from .DiagnosticsModel import DiagnosticsModel, DiagnosticsSchema
 from .MasterMedicineModel import MasterMedicineModel, MasterMedicineSchema
+from .MasterDiagnosticsModel import MasterDiagnosticsModel, MasterDiagnosticsSchema

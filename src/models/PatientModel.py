@@ -19,15 +19,15 @@ class PatientModel(db.Model):
     address = db.Column(db.String(1000), nullable=False)
     state = db.Column(db.String(255), nullable=False)
     city = db.Column(db.String(255), nullable=False)
-    medicines = db.relationship('MedicineModel', backref='patients', lazy=True)
-    diagnostics = db.relationship('DiagnosticsModel', backref='patients', lazy=True)
+    medicines = db.relationship('MedicineModel', backref='patients', cascade="all, delete", lazy=True)
+    diagnostics = db.relationship('DiagnosticsModel', backref='patients', cascade="all, delete", lazy=True)
 
 
     def __init__(self, data):
         self.ssn = data.get('ssn')
         self.name = data.get('name')
         self.age = data.get('age')
-        self.admited_on = datetime.datetime.utcnow()
+        self.admited_on = datetime.datetime.utcnow() if not data.get('admited_on') else data.get('admited_on')
         self.type_of_bed = data.get('type_of_bed')
         self.address = data.get('address')
         self.state = data.get('state')
@@ -78,7 +78,7 @@ def ssn(ssn):
 
 class PatientSchema(Schema):
     id = fields.Integer(dump_only=True)
-    ssn = fields.Integer(required=True, validate=ssn)
+    ssn = fields.Integer(required=True, validate=ssn, load_only=True)
     name = fields.String(required=True, validate=Regexp(regex=r'^[a-zA-Z ]+$', error="Name must conatin only alphabets"))
     age = fields.Integer(required=True, validate=age)
     admited_on = fields.DateTime()

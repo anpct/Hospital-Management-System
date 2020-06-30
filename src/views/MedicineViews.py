@@ -5,7 +5,7 @@ from ..shared.auth import Auth
 from marshmallow import ValidationError
 
 medicine_api = Blueprint("medicine_api", __name__)
-medicine_schema = MedicineSchema
+medicine_schema = MedicineSchema()
 
 
 @medicine_api.route('/', methods=['POST'])
@@ -18,7 +18,7 @@ def create():
     except ValidationError as err:
         return custom_response(err.messages, 400)
 
-    valid = MasterMedicineModel.check_validity(data)
+    valid = MasterMedicineModel.check_validity_and_update(data)
     if not valid:
         return custom_response({'error': 'Please enter a valid quantity'}, 404)
 

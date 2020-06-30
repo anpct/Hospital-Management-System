@@ -1,21 +1,21 @@
 from . import db
 from marshmallow import fields, Schema, validates, ValidationError
 from marshmallow.validate import Length, Regexp
-
+from .MasterMedicineModel import MasterMedicineSchema
 
 class MedicineModel(db.Model):
 
     __tablename__ = "medicines"
 
     id = db.Column(db.Integer, primary_key=True)
-    medicine_id = db.Column(db.Integer, db.ForeignKey('master_medicine.id'), nullable=False)
-    name = db.Column(db.String(128), nullable=False)
+    medicine = db.Column(db.Integer, db.ForeignKey('master_medicine.id'), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     patient = db.Column(db.Integer, db.ForeignKey('patients.id'), nullable=False)
 
-    def __init___(self, data):
-        self.name = data.get('name')
+    def __init__(self, data):
         self.quantity = data.get('quantity')
+        self.medicine = data.get('medicine')
+        self.patient = data.get('patient')
     
     def save(self):
         db.session.add(self)
@@ -32,8 +32,8 @@ class MedicineModel(db.Model):
 
 
 class MedicineSchema(Schema):
-
+    medicine = fields.Integer(required=True)
     id = fields.Integer(dump_only=True)
-    name = fields.String(required=True, validate=Regexp(regex=r'^[a-zA-Z ]+$', error="Name must conatin only alphabets"))
     quantity = fields.Integer(required=True)
     patient = fields.Integer(required=True)
+    medicines = fields.Nested(MasterMedicineSchema, many=True)

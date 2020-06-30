@@ -1,11 +1,11 @@
-from flask import json, Response, Blueprint
+from flask import json, Response, Blueprint, request
 from ..models.DiagnosticsModel import DiagnosticsModel, DiagnosticsSchema
 from ..shared.auth import Auth
 from marshmallow import ValidationError
 
 
 diagnostics_api = Blueprint('diagnostics_api', __name__)
-diagnostics_schema = DiagnosticsSchema
+diagnostics_schema = DiagnosticsSchema()
 
 
 @diagnostics_api.route('/', methods=['POST'])

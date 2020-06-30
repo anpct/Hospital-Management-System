@@ -14,13 +14,12 @@ def create():
     """
     req_data = request.get_json()
     try:
-        data = user_schema.load(req_data, partial=True)
+        data = user_schema.load(req_data)
     except ValidationError as err:
         return custom_response(err.messages, 400)
-    # check if user already exist in the db
-    user_in_db = UserModel.get_user_by_email(data.get('email'))
+    user_in_db = UserModel.get_user_by_username(data.get('username'))
     if user_in_db:
-        message = {'error': 'User already exist, please supply another email address'}
+        message = {'error': 'User already exist, please supply another username'}
         return custom_response(message, 400)
 
     user = UserModel(data)
@@ -51,9 +50,9 @@ def login():
         data = user_schema.load(req_data, partial=True)
     except ValidationError as err:
         return custom_response(err.messages, 400)
-    if not data.get('email') or not data.get('password'):
-        return custom_response({'error': 'you need email and password to sign in'}, 400)
-    user = UserModel.get_user_by_email(data.get('email'))
+    if not data.get('username') or not data.get('password'):
+        return custom_response({'error': 'you need username and password to sign in'}, 400)
+    user = UserModel.get_user_by_username(data.get('username'))
     if not user:
         return custom_response({'error': 'invalid credentials'}, 400)
     if not user.check_hash(data.get('password')):

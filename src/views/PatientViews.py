@@ -12,7 +12,7 @@ patient_schema = PatientSchema()
 def create():
     req_data = request.get_json()
     try:
-        data = patient_schema.load(req_data, partial=True)
+        data = patient_schema.load(req_data)
     except ValidationError as err:
         return custom_response(err.messages, 400)
 
@@ -34,7 +34,7 @@ def delete(patient_id):
     if not patient:
         return custom_response({'error': 'Patient not found'}, 404)
     patient.delete()
-    return custom_response({'message': 'Patient deleted'}, 204)
+    return custom_response({'message': 'Patient deleted'}, 200)
 
 
 @patient_api.route('/', methods=['GET'])
