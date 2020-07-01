@@ -64,7 +64,6 @@ class PatientModel(db.Model):
         return PatientModel.query.filter(
             or_(
             PatientModel.name.like(search),
-            PatientModel.ssn.like(search),
             PatientModel.id.like(search))).all()
     
     @staticmethod
