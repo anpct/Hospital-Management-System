@@ -23,6 +23,7 @@ class PatientModel(db.Model):
     address = db.Column(db.String(1000), nullable=False)
     state = db.Column(db.String(255), nullable=False)
     city = db.Column(db.String(255), nullable=False)
+    discharged = db.Column(db.Boolean, default=False)
     medicines = db.relationship('MedicineModel', backref='patients', cascade="all, delete", lazy=True)
     diagnostics = db.relationship('DiagnosticsModel', backref='patients', cascade="all, delete", lazy=True)
 
@@ -36,6 +37,7 @@ class PatientModel(db.Model):
         self.address = data.get('address')
         self.state = data.get('state')
         self.city = data.get('city')
+        self.discharged = data.get('discharged')
 
     def save(self):
         db.session.add(self)
@@ -90,6 +92,7 @@ class PatientSchema(Schema):
     address = fields.String(required=True)
     state = fields.String(required=True, validate=Regexp(regex=r'^[a-zA-Z ]+$', error="State must conatin only alphabets"))
     city = fields.String(required=True, validate=Regexp(regex=r'^[a-zA-Z ]+$', error="City must conatin only alphabets"))
+    discharged = fields.Boolean()
     medicines = fields.Nested(MedicineSchema, many=True)
     diagnostics = fields.Nested(DiagnosticsSchema, many=True)
 
