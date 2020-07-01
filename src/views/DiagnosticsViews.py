@@ -24,7 +24,7 @@ def create():
 
 
 # Endpoint for deletion
-@master_diagnostics_api.route('/<int:id>', methods=['DELETE'])
+@diagnostics_api.route('/<int:id>', methods=['DELETE'])
 @Auth.auth_required
 def delete(id):
     data = DiagnosticsModel.get_one_diagnostic(id)

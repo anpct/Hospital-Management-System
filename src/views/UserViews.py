@@ -27,7 +27,7 @@ def create():
     user.save()
     ser_data = user_schema.dump(user)
     token = Auth.generate_token(ser_data.get('id'))
-    return custom_response({'jwt_token': token, 'user': ser_data}, 201)
+    return custom_response({'token': token, 'user': ser_data}, 201)
 
 # Endpoint for retrival
 @user_api.route('/me', methods=['GET'])
@@ -60,7 +60,7 @@ def login():
         return custom_response({'error': 'invalid credentials'}, 400)
     ser_data = user_schema.dump(user)
     token = Auth.generate_token(ser_data.get('id'))
-    return custom_response({'jwt_token': token, 'user': ser_data}, 200)
+    return custom_response({'token': token, 'user': ser_data}, 200)
 
 
 # Custom response

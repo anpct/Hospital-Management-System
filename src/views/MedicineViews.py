@@ -30,7 +30,7 @@ def create():
     return custom_response(ser_data, 201)
 
 # Endpoint for deletion 
-@master_medicine_api.route('/<int:id>', methods=['DELETE'])
+@medicine_api.route('/<int:id>', methods=['DELETE'])
 @Auth.auth_required
 def delete(id):
     data = MedicineModel.get_one_medicine(id)
