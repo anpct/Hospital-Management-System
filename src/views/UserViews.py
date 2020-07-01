@@ -3,9 +3,11 @@ from flask import request, json, Response, Blueprint, g
 from ..models.UserModel import UserModel, UserSchema
 from ..shared.auth import Auth
 from marshmallow import ValidationError
+from flask_cors import CORS,cross_origin
 
 user_api = Blueprint('user_api', __name__)
 user_schema = UserSchema()
+CORS(user_api)
 
 # Endpoint for registration
 @user_api.route('/register', methods=['POST'])
@@ -52,12 +54,12 @@ def login():
     except ValidationError as err:
         return custom_response(err.messages, 400)
     if not data.get('username') or not data.get('password'):
-        return custom_response({'error': 'you need username and password to sign in'}, 400)
+        return custom_response({'error': 'You need username and password to sign in'}, 400)
     user = UserModel.get_user_by_username(data.get('username'))
     if not user:
-        return custom_response({'error': 'invalid credentials'}, 400)
+        return custom_response({'error': 'Invalid credentials'}, 400)
     if not user.check_hash(data.get('password')):
-        return custom_response({'error': 'invalid credentials'}, 400)
+        return custom_response({'error': 'Invalid credentials'}, 400)
     ser_data = user_schema.dump(user)
     token = Auth.generate_token(ser_data.get('id'))
     return custom_response({'token': token, 'user': ser_data}, 200)
