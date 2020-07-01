@@ -73,7 +73,7 @@ def update(patient_id):
     if not patient:
         return custom_response({'error': 'Patient not found'}, 404)
     try:
-        data = user_schema.load(req_data, partial=True)
+        data = patient_schema.load(req_data, partial=True)
     except ValidationError as err:
         return custom_response(err.messages, 400)
     patient.update(data)
