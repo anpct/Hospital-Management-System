@@ -3,11 +3,9 @@ from flask import request, json, Response, Blueprint, g
 from ..models.UserModel import UserModel, UserSchema
 from ..shared.auth import Auth
 from marshmallow import ValidationError
-from flask_cors import CORS,cross_origin
 
 user_api = Blueprint('user_api', __name__)
 user_schema = UserSchema()
-CORS(user_api)
 
 # Endpoint for registration
 @user_api.route('/register', methods=['POST'])
