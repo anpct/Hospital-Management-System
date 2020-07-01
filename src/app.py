@@ -12,8 +12,8 @@ from .models import db
 # Module responsible for creation of flask app
 def create_app(env_name):
     app = Flask(__name__)
-    db.init_app(app) # Initializing database
     app.config.from_object(app_config[env_name]) # Initializing config settings
+    db.init_app(app) # Initializing database
     app.register_blueprint(user_blueprint, url_prefix='/api/users') # Registering user API endpoints
     app.register_blueprint(patient_blueprint, url_prefix='/api/patients') # Registering patient API endpoints
     app.register_blueprint(medicine_blueprint, url_prefix='/api/medicines') # Registering medicine API endpoints
