@@ -14,6 +14,7 @@ class MedicineModel(db.Model):
     medicine = db.Column(db.Integer, db.ForeignKey('master_medicine.id'), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     patient = db.Column(db.Integer, db.ForeignKey('patients.id'), nullable=False)
+    medicines = db.relationship('MasterMedicineModel', backref='med', lazy=True)
 
     def __init__(self, data):
         self.quantity = data.get('quantity')
@@ -44,4 +45,4 @@ class MedicineSchema(Schema):
     id = fields.Integer(dump_only=True)
     quantity = fields.Integer(required=True)
     patient = fields.Integer(required=True)
-    medicines = fields.Nested(MasterMedicineSchema, many=True)
+    medicines = fields.Nested(MasterMedicineSchema, required=True)

@@ -62,3 +62,7 @@ class UserSchema(Schema):
     password = fields.Str(required=True, load_only=True, validate=validate.Regexp(regex=r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,}$', error='Passowrd must have one special character, one number, one upper case character, one lower case character and must be atleast 10 characters long'))
     created_at = fields.DateTime(dump_only=True)
     role = fields.Str(required=True)
+
+class UserLoginSchema(Schema):
+    username = fields.Str()
+    password  = fields.Str()

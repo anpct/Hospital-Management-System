@@ -1,11 +1,12 @@
 # Imports
 from flask import request, json, Response, Blueprint, g
-from ..models.UserModel import UserModel, UserSchema
+from ..models.UserModel import UserModel, UserSchema, UserLoginSchema
 from ..shared.auth import Auth
 from marshmallow import ValidationError
 
 user_api = Blueprint('user_api', __name__)
 user_schema = UserSchema()
+user_login_schema = UserLoginSchema()
 
 # Endpoint for registration
 @user_api.route('/register', methods=['POST'])
@@ -48,7 +49,7 @@ def login():
     """
     req_data = request.get_json()
     try:
-        data = user_schema.load(req_data, partial=True)
+        data = user_login_schema.load(req_data, partial=True)
     except ValidationError as err:
         return custom_response(err.messages, 400)
     if not data.get('username') or not data.get('password'):

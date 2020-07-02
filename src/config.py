@@ -6,7 +6,7 @@ class Development(object):
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     DEBUG = True
     TESTING = False
-    JWT_SECRET_KEY = 'uhfiush889nkjk)(&)*(&$UHJKKFJ'
+    JWT_SECRET_KEY = 'gefgiuwhui7969874u9ihrio7y348yhiuwehoiuf0(*&G*)&'
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'tcs.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
