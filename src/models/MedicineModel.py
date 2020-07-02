@@ -45,4 +45,4 @@ class MedicineSchema(Schema):
     id = fields.Integer(dump_only=True)
     quantity = fields.Integer(required=True)
     patient = fields.Integer(required=True)
-    medicines = fields.Nested(MasterMedicineSchema, required=True)
+    medicines = fields.Nested(MasterMedicineSchema)
