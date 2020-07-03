@@ -1,0 +1,27 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: rgb(245, 245, 245);
+  height: 100%;
+}
+
+a {
+  text-decoration: none;
+}
+
+#root {
+  height: 100%;
+}
+
+.content {
+  margin: 80px auto 0 auto;
+}
