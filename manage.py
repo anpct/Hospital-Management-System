@@ -6,7 +6,7 @@ from flask_migrate import Migrate, MigrateCommand
 from src.app import create_app, db
 
 # Selecting environmet
-env_name = 'development'
+env_name = 'production'
 app = create_app(env_name)
 
 migrate = Migrate(app=app, db=db) # Registering database
