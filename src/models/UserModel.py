@@ -57,7 +57,7 @@ class UserModel(db.Model):
 # Schema for serilazitation and validation
 class UserSchema(Schema):
     id = fields.Int(dump_only=True)
-    name = fields.Str(required=True)
+    name = fields.Str(required=True, validate=validate.Regexp(regex=r'^[a-zA-Z ]{1,}$', error="Name must conatin only alphabets"))
     username = fields.Str(required=True, validate=validate.Length(min=8))
     password = fields.Str(required=True, load_only=True, validate=validate.Regexp(regex=r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,}$', error='Passowrd must have one special character, one number, one upper case character, one lower case character and must be atleast 10 characters long'))
     created_at = fields.DateTime(dump_only=True)

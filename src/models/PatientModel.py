@@ -3,7 +3,7 @@ from marshmallow import fields, Schema, validates, ValidationError
 import datetime
 from . import db
 from marshmallow.validate import Length, Regexp
-from sqlalchemy import or_
+from sqlalchemy import or_, Sequence
 from .MedicineModel import MedicineSchema
 from .DiagnosticsModel import DiagnosticsSchema
 

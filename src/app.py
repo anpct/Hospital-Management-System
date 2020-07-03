@@ -12,7 +12,7 @@ from flask_cors import CORS
 
 # Module responsible for creation of flask app
 def create_app(env_name):
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder='./build', static_url_path='/')
     app.config.from_object(app_config[env_name]) # Initializing config settings
     db.init_app(app) # Initializing database
     CORS(app, supports_credentials=True, origin="http://localhost:3000")
@@ -31,9 +31,11 @@ def create_app(env_name):
     CORS(master_diagnostics_blueprint)
     app.register_blueprint(master_diagnostics_blueprint,
                            url_prefix='/api/master-diagnostics') # Registering master diagnostics database API endpoints
-
-    @app.route('/', methods=['GET'])
+    
+    @app.route('/')
+    @app.route('/signup')
+    @app.route('/dashboard')
     def index():
-        return 'Congratulations! Your first endpoint is working'
+        return app.send_static_file('index.html')
 
     return app
