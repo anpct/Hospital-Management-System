@@ -12,7 +12,7 @@ from flask_cors import CORS
 
 # Module responsible for creation of flask app
 def create_app(env_name):
-    app = Flask(__name__, static_folder='./build', static_url_path='/')
+    app = Flask(__name__, static_folder='build', static_url_path='/')
     app.config.from_object(app_config[env_name]) # Initializing config settings
     db.init_app(app) # Initializing database
     CORS(app, supports_credentials=True, origin="http://localhost:3000")
