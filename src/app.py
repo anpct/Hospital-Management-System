@@ -33,6 +33,8 @@ def create_app(env_name):
                            url_prefix='/api/master-diagnostics') # Registering master diagnostics database API endpoints
     
     @app.route('/')
+    @app.route('/dashboard')
+    @app.route('/signup')
     def index():
         return render_template('index.html')
 

@@ -4,6 +4,7 @@ import datetime
 from flask import json, Response, request, g
 from functools import wraps
 from ..models.UserModel import UserModel
+from flask import current_app
 
 
 class Auth:
@@ -24,7 +25,7 @@ class Auth:
             }
             return jwt.encode(
                 payload,
-                "gefgiuwhui7969874u9ihrio7y348yhiuwehoiuf0(*&G*)&",
+                current_app.config['JWT_SECRET_KEY'],
                 'HS256'
             ).decode("utf-8")
         except Exception as e:
@@ -41,7 +42,7 @@ class Auth:
         """
         re = {'data': {}, 'error': {}}
         try:
-            payload = jwt.decode(token, "gefgiuwhui7969874u9ihrio7y348yhiuwehoiuf0(*&G*)&")
+            payload = jwt.decode(token, current_app.config['JWT_SECRET_KEY'])
             re['data'] = {'user_id': payload['sub']}
             return re
         except jwt.ExpiredSignatureError as e1:
