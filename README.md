@@ -3,6 +3,12 @@
 
 A hospital management system made with flask and react
 
+Tech stack:
+
+ 1. Flask
+ 2. React
+ 3. SQLite
+
 Steps to execute:
 
  1. `pip install pipenv`
